@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+    --primary-color: #b72a23;
+}
+.button{  
+    padding: .25rem 1rem;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    color: white;
+    transition: .2s linear all;
+}
+.button:hover{
+    background-color: inherit;
+    color: var(--primary-color);
+    outline: 2px solid var(--primary-color);
+}
+.icon-cirle{
+    background-color: white;
+    color: black;
+
+}
+.dot{
+    background-color: #DCE0E3;
+    border-radius: 1000px;
+    width: 10px;
+    height: 10px;
+}
+.dot.active{
+    width: 40px;
+}
+.icon{
+    color: #b4bccf;
+}
+.icon.active{
+    color: #b72a23;
+}
+.h1-title{
+    font-weight: bold;
+    text-align: center;
+    color: var(--primary-color);
+    line-height:  inherit;
+    padding-bottom: 1rem;
+    @apply lg:text-[3rem] text-3xl
+}
+.h2-title{
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: center;
+    color: var(--primary-color);
+    line-height:  inherit;
+    font-style: italic;
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: initial;
+    padding-bottom: 1rem;
+}
+.grid-product{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 2rem;
+}
+.info-icon:hover + div{
+    opacity: 1;
+    display: inline-block;
+}
+.btn_primary{
+    border-radius: 8px;
+    padding: .4rem .6rem;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: .9rem;
+}
+.sub-title{
+    font-size: .8rem;
+    color: #b4bccf;
+}
+.inactive{
+    color: #b4bccf !important;
+}
+input[type="email"], input[type="password"], input[type="text"]{
+    @apply border p-2 rounded-md block transition-all w-full
+}
+input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus{
+    @apply outline-primary
+}
