@@ -5,9 +5,9 @@ import React, { useState, useEffect } from 'react';
 export default function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    function handleFormSubmit(ev) {
+    async function handleFormSubmit(ev) {
         ev.preventDefault(); // ngăn chặn hành động mặt định của button
-        fetch('./api/register', {
+        await fetch('./api/register', {
             method: 'POST',
             body: JSON.stringify({ email, password }),
             headers: { 'Content-Type': 'application/json' }
