@@ -9,7 +9,7 @@
     @apply px-6 py-2 bg-primary rounded-md text-white transition-all
 }
 .button.inactive{
-    @apply px-6 py-2 bg-inactive rounded-md text-white transition-all pointer-events-none
+    @apply px-6 py-2 bg-inactive rounded-md text-white transition-all 
 }
 .button:hover{
     background-color: inherit;
@@ -55,6 +55,9 @@
     text-decoration-style: wavy;
     text-decoration-color: initial;
     padding-bottom: 1rem;
+}
+.h3-tab{
+    @apply font-bold text-xl border-b mb-3 relative before:content-[""] before:absolute before:h-[2px] before:w-fit before:bg-primary before:bottom-0
 }
 .grid-product{
     display: grid;

@@ -2,19 +2,26 @@
 import Image from "next/image"
 import Link from "next/link"
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { FaCircleNotch } from "react-icons/fa6";
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginProcess, setloginProcess] = useState(false)
     const [validPass, setValidPass] = useState(false)
+
+    useEffect(() => {
+        const token = localStorage.getItem('userToken')
+        token && window.location.href('./')
+    })
+
     const handleFormSubmit = async (ev) => {
         ev.preventDefault(); // Ngăn chặn hành động mặc định của form
         console.log(">>> Button")
-        setloginProcess(true)
+        setloginProcess(true) 
         try {
             // Sử dụng await để chờ kết quả của yêu cầu fetch
-            const response = await fetch('./api/register', {
+            const response = await fetch('./api/login', {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
                 headers: { 'Content-Type': 'application/json' }
@@ -31,16 +38,16 @@ export default function Login() {
             // Ví dụ: cập nhật UI hoặc thông báo cho người dùng về việc đăng ký thành công
             if (data && data.token) {
                 localStorage.setItem('userToken', data.token)
-
-                window.location.href = './'
+                toast.success("Wellcome to Pizza App")
             }
 
         } catch (error) {
-            console.error('There was an error!', error);
+            toast.error(error.message)
         }
         setloginProcess(false)
 
     }
+
 
     const handlePassword = (ev) => {
         const inputPassword = ev.target.value;
@@ -55,9 +62,6 @@ export default function Login() {
         // Cập nhật trạng thái lỗi dựa trên kết quả kiểm tra
         setValidPass(passwordValid); // Nếu mật khẩu không hợp lệ, setError sẽ là true
     }
-    
-
-    // Đảm bảo rằng email và password đã được định nghĩa và hợp lệ trước khi gọi hàm này
 
 
     return (
@@ -104,7 +108,7 @@ export default function Login() {
                             value={password}
                             onChange={handlePassword} />
                         
-                        <button className={email && validPass ? "button mt-4" : "button mt-4 inactive"} type="submit" disabled={loginProcess}><FaCircleNotch />Login</button>
+                        <button className={email && validPass ? "button items-center justify-center flex mt-4" : "button mt-4 items-center justify-center flex w-full inactive pointer-events-none"} type="submit" disabled={loginProcess}>{loginProcess && <FaCircleNotch className="animate-spin mr-4" />}Login</button>
                         <div className="border-t border-b my-4 text-center p-2 text-sm">or login with provider</div>
                         <button className="flex items-center justify-center w-full border rounded-full p-1 hover:border-primary">
                             <Image src={"/img/googleicon.png"} alt="" width={'32'} height={'32'}></Image>

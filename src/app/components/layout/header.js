@@ -19,7 +19,6 @@ export default function header() {
 
             const data = await response.json();
 
-            // Giả sử API trả về một trường "isValid" để cho biết token có hợp lệ không
             return data.isValid;
         } catch (error) {
             console.error('Error during token validation:', error);
@@ -54,7 +53,7 @@ export default function header() {
                 <Link href={''}>Home</Link>
                 <Link href={''}>Home</Link>
             </nav>
-            {isValid ? <nav className='text-primary items-center flex justify-end flex-1 gap-x-6 mx-auto'>
+            {!isValid ? <nav className='text-primary items-center flex justify-end flex-1 gap-x-6 mx-auto'>
                 <Link href={'./login'} className='button'> Login</Link>
                 <Link href={'./register'}>Register </Link>
             </nav> : <Link onClick={logout} className='button' href={'./login'}> Logout </Link>}
