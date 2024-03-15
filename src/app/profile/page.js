@@ -132,7 +132,7 @@ export default function ProfileEdit() {
                             }} />
                     </div>
                 </div>
-                <button className="w-full button items-center justify-center flex my-4 " type="submit"> <FaCircleNotch className="animate-spin mr-4" />Save</button>
+                <button className={email || name || address || country || state || address || zip ? "button w-full items-center justify-center flex mt-4" : "button mt-4 items-center justify-center flex w-full inactive pointer-events-none"} type="submit"><FaCircleNotch className="animate-spin mr-4" /> Login</button>
             </form>
         </>
     )

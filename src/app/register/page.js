@@ -2,6 +2,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import React, { useState, useEffect } from 'react';
+import toast from "react-hot-toast";
 import { FaCircleNotch } from "react-icons/fa6";
 
 export default function Register() {
@@ -37,7 +38,7 @@ export default function Register() {
             }
 
         } catch (error) {
-            console.error('There was an error!', error);
+            toast.error(error.message)
         }
         setRegisterProcess(false)
 
@@ -56,6 +57,7 @@ export default function Register() {
         // Cập nhật trạng thái lỗi dựa trên kết quả kiểm tra
         setValidPass(passwordValid); // Nếu mật khẩu không hợp lệ, setError sẽ là true
     }
+    
     return (
         <section className="max-w-6xl mx-auto">
             <div className="flex items-center flex-col lg:flex-row">

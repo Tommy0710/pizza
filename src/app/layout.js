@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
           </footer>
         </main>
         <Toaster
-          position="top-center"
+          position="top-right"
           reverseOrder={false}
           gutter={8}
           toastOptions={{

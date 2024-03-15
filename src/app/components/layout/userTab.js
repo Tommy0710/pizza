@@ -2,32 +2,18 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from 'next/navigation'
-import { UseAuth } from "./customHook/auth";
+
 
 
 export default function UserTabs() {
     const path = usePathname()
-    const [token, setToken] = useState("");
-    // const navigate = useNavigate()
 
-    const { isAuthenticated, loading } = UseAuth(token)
-    useEffect(() => {
-        const userToken = localStorage.getItem('userToken');
-        setToken(userToken);
-        // if (!isAuthenticated) {
-        //     window.location.href = "./login"
-        // }
-    }, []);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
     // const getWidthText = () => {
 
     // }
 
     
-    console.log(path)
+    // console.log(path)
     return (
         <>
             <div className="flex justify-center mb-8 ">
