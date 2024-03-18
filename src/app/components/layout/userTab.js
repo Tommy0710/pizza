@@ -8,12 +8,15 @@ import { usePathname } from 'next/navigation'
 export default function UserTabs() {
     const path = usePathname()
 
-    // const getWidthText = () => {
+    // const [token, setToken] = useState();
+    // // const navigate = useNavigate()
+    // const { isAuthenticated, loading } = UseAuth(token)
 
-    // }
+    // useEffect(() => {
+    //     const userToken = localStorage.getItem('userToken');
+    //     setToken(userToken);
+    // }, []);
 
-    
-    // console.log(path)
     return (
         <>
             <div className="flex justify-center mb-8 ">
@@ -22,7 +25,7 @@ export default function UserTabs() {
                     <Link className={path === '/taxonomy' ?  "button whitespace-nowrap" : "button inactive  whitespace-nowrap"} href={"./taxonomy"}>Taxonomy</Link>
                     <Link className={path === '/add-product' ?  "button whitespace-nowrap" : "button inactive  whitespace-nowrap"} href={"./add-product"}>Add Product</Link>
                     <Link className={path === '/product-all' ?  "button whitespace-nowrap" : "button inactive  whitespace-nowrap"} href={"./product-all"}>All Product</Link>
-                </div>
+                </div> 
             </div>
         </>
     )

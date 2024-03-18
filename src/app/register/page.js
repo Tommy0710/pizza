@@ -34,6 +34,7 @@ export default function Register() {
             console.log(data); // Log hoặc xử lý dữ liệu nhận được
             // Ví dụ: cập nhật UI hoặc thông báo cho người dùng về việc đăng ký thành công
             if (data) {
+                toast.success("Signup successfully")
                 setSuccessRes(true)
             }
 

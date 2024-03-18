@@ -4,44 +4,39 @@ import { useEffect, useState } from 'react'
 import CartIcon from "./cartIcon"
 export default function header() {
     const [isValid, setIsValid] = useState(false);
-    async function validateToken(token) {
-        try {
-            const response = await fetch('/api/token/validate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-            });
+    // async function validateToken(token) {
+    //     try {
+    //         const response = await fetch('/api/token/validate', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${token}`
+    //             },
+    //         });
 
-            if (!response.ok) {
-                throw new Error('Token validation failed');
-            }
+    //         if (!response.ok) {
+    //             throw new Error('Token validation failed');
+    //         }
 
-            const data = await response.json();
+    //         const data = await response.json();
 
-            return data.isValid;
-        } catch (error) {
-            console.error('Error during token validation:', error);
-            return false;
-        }
-    }
+    //         return data.isValid;
+    //     } catch (error) {
+    //         console.error('Error during token validation:', error);
+    //         return false;
+    //     }
+    // }
 
     function logout() {
         localStorage.removeItem('userToken');
+        window.location.reload()
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('userToken');
         if (token) {
             // Gửi token đến backend để xác thực
-            validateToken(token)
-                .then((isValid) => {
-                    if (isValid === "success") {
-                        setIsValid(true)
-                    }
-                })
-
+            setIsValid(true)
         }
     }, []); // Chạy một lần sau khi component mount
 
@@ -61,7 +56,7 @@ export default function header() {
                         <Link href={'./login'} className='button mr-3'> Login</Link>
                         <Link href={'./register'}>Register </Link>
                     </div>
-                    : <Link onClick={logout} className='button' href={'./login'}> Logout </Link>}
+                    : <button onClick={logout} className='button'> Logout </button>}
             </nav>
 
 

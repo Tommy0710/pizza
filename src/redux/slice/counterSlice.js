@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit'
 export const counterSlice = createSlice({
   name: 'products',
   initialState: {
-    CartArr: JSON.parse(localStorage.getItem('cartItem')) || []
+    CartArr:  []
+    // JSON.parse(localStorage.getItem('cartItem')) ||
   },
   reducers: {
     addProduct: (state, action) => {

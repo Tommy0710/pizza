@@ -22,16 +22,16 @@ export default function Taxonomy() {
             },
         ])
 
-    const [token, setToken] = useState("");
+    const [token, setToken] = useState();
     // const navigate = useNavigate()
     const { isAuthenticated, loading } = UseAuth(token)
 
     useEffect(() => {
         const userToken = localStorage.getItem('userToken');
         setToken(userToken);
-        // if (!isAuthenticated.admin === "yes") {
-        //     window.location.href = "./login"
-        // }
+        if (isAuthenticated) {
+            window.location.href = "/login"
+        }
     }, []);
 
     useEffect(() => {
