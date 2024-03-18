@@ -8,8 +8,8 @@ export default function Side_bar(){
     return(
         <div className='basis-1/12  pr-4'>
             <div className="drop-shadow-sm flex items-center flex-col gap-12 p-4 ">
-            <Link href={''}><FaBurger size={'2rem'} color="#b4bccf"/></Link>
-            <Link href={''}><FaUser size={'2rem'} color="#b4bccf"/></Link>
+            <Link href={'/'}><FaBurger size={'2rem'} color="#b4bccf"/></Link>
+            <Link href={'/profile'}><FaUser size={'2rem'} color="#b4bccf"/></Link>
             </div>
         </div>
     )

@@ -1,6 +1,7 @@
 "use client"
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import CartIcon from "./cartIcon"
 export default function header() {
     const [isValid, setIsValid] = useState(false);
     async function validateToken(token) {
@@ -36,7 +37,7 @@ export default function header() {
             // Gửi token đến backend để xác thực
             validateToken(token)
                 .then((isValid) => {
-                    if (isValid === "success"){
+                    if (isValid === "success") {
                         setIsValid(true)
                     }
                 })
@@ -53,11 +54,17 @@ export default function header() {
                 <Link href={''}>Home</Link>
                 <Link href={''}>Home</Link>
             </nav>
-            {!isValid ? <nav className='text-primary items-center flex justify-end flex-1 gap-x-6 mx-auto'>
-                <Link href={'./login'} className='button'> Login</Link>
-                <Link href={'./register'}>Register </Link>
-            </nav> : <Link onClick={logout} className='button' href={'./login'}> Logout </Link>}
-            
+            <nav className='text-primary items-center flex justify-end flex-1 gap-x-6 mx-auto'>
+                <CartIcon />
+                {!isValid ?
+                    <div>
+                        <Link href={'./login'} className='button mr-3'> Login</Link>
+                        <Link href={'./register'}>Register </Link>
+                    </div>
+                    : <Link onClick={logout} className='button' href={'./login'}> Logout </Link>}
+            </nav>
+
+
         </header>
     )
 }

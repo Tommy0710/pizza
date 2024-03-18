@@ -12,13 +12,13 @@ export default function Register() {
     const [validPass, setValidPass] = useState(false)
     const [successRes, setSuccessRes] = useState(false)
 
+
     const handleFormSubmit = async (ev) => {
         ev.preventDefault(); // Ngăn chặn hành động mặc định của form
-        console.log(">>> Button")
         setRegisterProcess(true)
         try {
             // Sử dụng await để chờ kết quả của yêu cầu fetch
-            const response = await fetch('./api/register', {
+            const response = await fetch('http://localhost:8080/authentication/signup', {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
                 headers: { 'Content-Type': 'application/json' }
@@ -101,7 +101,7 @@ export default function Register() {
                             placeholder="Password"
                             value={password}
                             onChange={handlePassword} />
-                        <button className={email && validPass ? "button items-center justify-center flex mt-4" : "button mt-4 items-center justify-center flex w-full inactive"} type="submit" disabled={registerProcess}>{registerProcess && <FaCircleNotch className="animate-spin mr-4" />}Register</button>
+                        <button className={email && validPass ? "button items-center justify-center flex mt-4" : "button mt-4 items-center justify-center flex w-full pointer-events-none inactive"} type="submit" disabled={registerProcess}>{registerProcess && <FaCircleNotch className="animate-spin mr-4" />}Register</button>
                         {successRes && (<p>Successfully register click here to <Link href="./login">login</Link></p>)}
                         <div className="border-t border-b my-4 text-center p-2 text-sm">or login with provider</div>
                         <button className="flex items-center justify-center w-full border rounded-full p-1 hover:border-primary">

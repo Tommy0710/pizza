@@ -1,5 +1,6 @@
 "use client"
 import React, { useEffect, useState } from "react";
+import { Listbox } from '@headlessui/react'
 import UserTabs from "../components/layout/userTab";
 import SectionHeaders from "../components/layout/sectionheader";
 import { UseAuth } from "../components/layout/customHook/auth";
@@ -9,12 +10,21 @@ import toast from "react-hot-toast";
 
 export default function Taxonomy() {
     const [productName, setProductName] = useState('');
-    const [category, setCategory] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [stock, setStock] = useState('');
-    const [categories, setCategories] = useState([]);
+    const [category, setCategory] = useState('');
+    const [categories, setCategories] = useState([
+        {
+            id: 1,
+            name: "Tommy"
+        }, 
+        {
+            id: 2,
+            name: "Thiencuteo"
+        }]);
+    const [isProcessing, setIsProcessing] = useState(false)
 
     const [token, setToken] = useState("");
     // const navigate = useNavigate()
@@ -33,57 +43,85 @@ export default function Taxonomy() {
     }, []);
 
     useEffect(() => {
-        // Hàm này sẽ gọi API để lấy danh sách category
-        const fetchCategories = async () => {
-            try {
-                const response = await fetch('/api/categories');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch categories');
-                }
-                const data = await response.json();
-                setCategories(data);
-            } catch (error) {
-                console.error("Error fetching categories:", error);
-            }
-        };
-
-        fetchCategories();
+        try {
+            fetch("http://localhost:8080/category/get").then(res => {
+                res.json().then(categories => {
+                    setCategories(categories)
+                });
+            });
+        }
+        catch (error) {
+            console.log(error.message)
+        }
     }, []);
 
     // Hàm để xử lý submit form
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        // Logic để gửi dữ liệu sản phẩm mới tới backend...
+        setIsProcessing(true)
+        try {
+            const response = await fetch("./api/", {
+                method: 'POST',
+                body: JSON.stringify({
+                    file: image,
+                    productName: productName,
+                    description: description,
+                    unitPrice: price,
+                    productGroupId: category
+                }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            if (response.ok) {
+                toast.success("Đã thêm sản phẩm thành công")
+            } else {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+        }
+        catch (error) {
+            toast.error(error.message)
+        }
+        finally{
+            setIsProcessing(false)
+        }
     };
 
     useEffect(() => {
-        return () => URL.revokeObjectURL(image.preview)
-    }, [image])
+        return () => {
+            if (image && typeof image === 'object' && image.preview) {
+                URL.revokeObjectURL(image.preview);
+            }
+        };
+    }, [image]);
+
 
     const handleImage = (ev) => {
         const file = ev.target.files[0]
         console.log(file)
-        
-        file.preview = URL.createObjectURL(file) 
-        
+
+        file.preview = URL.createObjectURL(file)
+
 
         setImage(file)
         console.log(file)
     }
+    const handleCategory = (ev) => {
+        ev.preventDefault
+        setCategory(ev.target.value)
+    }
 
     return (
-        <>
+        <div className="mb-6">
             <SectionHeaders mainHeader={"Add Product"} />
             <UserTabs />
-            <form onSubmit={handleSubmit}>
+            <h3 className="h3-tab before:w-[140px]">Add Product</h3>
+            <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
                 <div>
                     <label htmlFor="productName">Product Name:</label>
-                    <input id="productName" value={productName} onChange={e => setProductName(e.target.value)} />
+                    <input type="text" id="productName" value={productName} onChange={e => setProductName(e.target.value)} />
                 </div>
                 <div>
                     <label htmlFor="category">Category:</label>
-                    <select id="category" value={category} onChange={e => setCategory(e.target.value)}>
+                    <select id="category" value={category} onChange={handleCategory}>
                         <option value="">Select a category</option>
                         {categories.map((cat) => (
                             <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -103,6 +141,7 @@ export default function Taxonomy() {
                     <input type="file" name="image" id="image" onChange={handleImage} />
                     <Image
                         src={image.preview || "/img/default100.jpg"}
+                        className="min-w-[100px] min-h-[100px] object-contain"
                         width={100}
                         height={100}
                         alt={image.name ?? "Empty Product Image"} ></Image>
@@ -112,9 +151,9 @@ export default function Taxonomy() {
                     <label htmlFor="stock">Stock:</label>
                     <input id="stock" type="number" value={stock} onChange={e => setStock(e.target.value)} />
                 </div>
-                <button type="submit">Add Product</button>
+                <button className={productName && price && description && image && category && stock ? "button w-full items-center justify-center flex mt-4" : "button mt-4 items-center justify-center flex w-full inactive pointer-events-none"} type="submit" disabled={isProcessing}>{isProcessing && <FaCircleNotch className="animate-spin mr-4" />}Add Product</button>
             </form>
-        </>
+        </div>
     )
 }
 
