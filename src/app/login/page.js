@@ -45,9 +45,8 @@ export default function Login() {
         localStorage.setItem("userToken", data.token);
         localStorage.setItem("userID", data.data.id);
         localStorage.setItem("userData", JSON.stringify(data));
-        // window.location.href = "/"
-        //navigate to home page
         toast.success("Wellcome to Pizza App");
+        window.location.href = "/"
       } else if (data.description === "Login Failed") {
         toast.error("Nhập sai mật khẩu rồi thằng ngu")
       }
@@ -131,18 +130,6 @@ export default function Login() {
               Login
             </button>
             <p>Forgot your password? <Link href={'./forgot-password/'} className="mt-2 underline decoration-dotted">forgot password</Link></p>
-            <div className="border-t border-b my-4 text-center p-2 text-sm">
-              or login with provider
-            </div>
-            <button className="flex items-center justify-center w-full border rounded-full p-1 hover:border-primary">
-              <Image
-                src={"/img/googleicon.png"}
-                alt=""
-                width={"32"}
-                height={"32"}
-              ></Image>
-              login with goolge
-            </button>
           </form>
         </div>
       </div>

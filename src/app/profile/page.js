@@ -18,11 +18,11 @@ export default function ProfileEdit() {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
-    setName(userData.data.username);
+    setName(userData?.data.username);
     // setPassword(userData.data.password)
-    setNumber(userData.data.phoneNumber);
-    setAddress(userData.data.address);
-    setUserID(userData.data.id);
+    setNumber(userData?.data.phoneNumber);
+    setAddress(userData?.data.address);
+    setUserID(userData?.data.id);
   }, []);
   console.log(userID);
 
